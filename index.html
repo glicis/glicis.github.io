@@ -73,80 +73,9 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-蓝桥杯备赛（十）-疑难杂题" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/08/02/%E8%93%9D%E6%A1%A5%E6%9D%AF%E5%A4%87%E8%B5%9B%EF%BC%88%E5%8D%81%EF%BC%89-%E7%96%91%E9%9A%BE%E6%9D%82%E9%A2%98/" class="article-date">
-  <time class="dt-published" datetime="2023-08-02T09:49:27.080Z" itemprop="datePublished">2023-08-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="蓝桥杯备赛（十）-疑难杂题"><a href="#蓝桥杯备赛（十）-疑难杂题" class="headerlink" title="蓝桥杯备赛（十）-疑难杂题"></a>蓝桥杯备赛（十）-疑难杂题</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><blockquote>
-<p>….</p>
-</blockquote>
-<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><h3 id="Q1"><a href="#Q1" class="headerlink" title="Q1"></a>Q1</h3><blockquote>
-<p>修改数组(<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/1244/">原题链接</a>)</p>
-</blockquote>
-<h3 id="A1"><a href="#A1" class="headerlink" title="A1"></a>A1</h3><blockquote>
-<p>采取并查集进行配对。<br>代码如下:</p>
-</blockquote>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">n=<span class="built_in">int</span>(<span class="built_in">input</span>())</span><br><span class="line">N=<span class="built_in">int</span>(<span class="number">1e6</span>+<span class="number">10</span>)</span><br><span class="line">st=[i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(N)]</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">find</span>(<span class="params">x</span>):</span><br><span class="line">    <span class="keyword">if</span> st[x]!=x:</span><br><span class="line">        st[x]=find(st[x])</span><br><span class="line">    <span class="keyword">return</span> st[x]</span><br><span class="line">lst=<span class="built_in">list</span>(<span class="built_in">map</span>(<span class="built_in">int</span>,<span class="built_in">input</span>().split()))</span><br><span class="line">str_=[]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> lst:</span><br><span class="line">    x=find(i)</span><br><span class="line">    st[x]+=<span class="number">1</span></span><br><span class="line">    str_.append(<span class="built_in">str</span>(x))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27; &#x27;</span>.join(str_))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="Q2"><a href="#Q2" class="headerlink" title="Q2"></a>Q2</h3><blockquote>
-<p>倍数问题(<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1236/">原题链接</a>)</p>
-</blockquote>
-<h3 id="A2"><a href="#A2" class="headerlink" title="A2"></a>A2</h3><blockquote>
-<p>需要用到一些DP思想，并且需要倒序找到可行解。<br>代码如下:</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">n,k=<span class="built_in">map</span>(<span class="built_in">int</span>,<span class="built_in">input</span>().split())</span><br><span class="line">dic=&#123;&#125;</span><br><span class="line">num_list=<span class="built_in">list</span>(<span class="built_in">map</span>(<span class="built_in">int</span>,<span class="built_in">input</span>().split()))</span><br><span class="line"><span class="keyword">for</span> num <span class="keyword">in</span> num_list:</span><br><span class="line">    <span class="keyword">if</span> num%k <span class="keyword">in</span> dic:</span><br><span class="line">        dic[num%k].append(num)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        dic.setdefault(num%k,[num])</span><br><span class="line"></span><br><span class="line">f=[[-<span class="built_in">float</span>(<span class="string">&quot;inf&quot;</span>) <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(k)]<span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>)]</span><br><span class="line">f[<span class="number">0</span>][<span class="number">0</span>]=<span class="number">0</span></span><br><span class="line"><span class="comment">#排序(降序)</span></span><br><span class="line"><span class="keyword">for</span> key <span class="keyword">in</span> dic.keys():</span><br><span class="line">    dic[key].sort(reverse=<span class="literal">True</span>)</span><br><span class="line">    u=<span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> u&lt;<span class="number">3</span> <span class="keyword">and</span> u&lt;<span class="built_in">len</span>(dic[key]):</span><br><span class="line">        val=dic[key][u]</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>,<span class="number">0</span>,-<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">for</span> c <span class="keyword">in</span> <span class="built_in">range</span>(k):</span><br><span class="line">                f[j][c]=<span class="built_in">max</span>(f[j][c],f[j-<span class="number">1</span>][((c-val)%k+k)%k]+val)</span><br><span class="line">        u+=<span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(f[<span class="number">3</span>][<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
-<h3 id="Q3"><a href="#Q3" class="headerlink" title="Q3"></a>Q3</h3><blockquote>
-<p>距离(<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1173/">原题链接</a>)</p>
-</blockquote>
-<h3 id="A3"><a href="#A3" class="headerlink" title="A3"></a>A3</h3><blockquote>
-<p>该题典型的LCA问题，找共同祖先。<br>代码如下:</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">n,m=<span class="built_in">map</span>(<span class="built_in">int</span>,<span class="built_in">input</span>().split())</span><br><span class="line">g=[[] <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n+<span class="number">1</span>)]</span><br><span class="line">res=[<span class="number">0</span> <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(m)]</span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n-<span class="number">1</span>):</span><br><span class="line">    a,b,c=<span class="built_in">map</span>(<span class="built_in">int</span>,<span class="built_in">input</span>().split())</span><br><span class="line">    g[a].append([b,c])</span><br><span class="line">    g[b].append([a,c])</span><br><span class="line">query=[[]<span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n+<span class="number">1</span>)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">    <span class="comment">#记录第i组查询</span></span><br><span class="line">    a,b=<span class="built_in">map</span>(<span class="built_in">int</span>,<span class="built_in">input</span>().split())</span><br><span class="line">    query[a].append([b,i])</span><br><span class="line">    query[b].append([a,i])</span><br><span class="line">p=[i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n+<span class="number">1</span>)]</span><br><span class="line">v=[<span class="number">0</span> <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n+<span class="number">1</span>)]</span><br><span class="line">d=[<span class="number">0</span> <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n+<span class="number">1</span>)]</span><br><span class="line"><span class="comment">#tarjan算法，进行公共祖先问题的求解。</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">find</span>(<span class="params">x</span>):</span><br><span class="line">    <span class="keyword">if</span> x!=p[x]:</span><br><span class="line">        p[x]=find(p[x])</span><br><span class="line">    <span class="keyword">return</span> p[x]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dfs</span>(<span class="params">node</span>):</span><br><span class="line">    <span class="comment">#得到其到根节点的距离</span></span><br><span class="line">    <span class="keyword">if</span> v[node]:</span><br><span class="line">        <span class="keyword">return</span> </span><br><span class="line">    v[node]=<span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> g[node]:</span><br><span class="line">        j=item[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">if</span> v[j]:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        d[j]=d[node]+item[<span class="number">1</span>]</span><br><span class="line">        dfs(j)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">tarjan</span>(<span class="params">node</span>):</span><br><span class="line">    v[node]=<span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> g[node]:</span><br><span class="line">        j=item[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> v[j]:</span><br><span class="line">            tarjan(j)</span><br><span class="line">            p[j]=node</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> query[node]:</span><br><span class="line">        y,number=i[<span class="number">0</span>],i[<span class="number">1</span>]</span><br><span class="line">        <span class="keyword">if</span> v[y]==<span class="number">2</span>:</span><br><span class="line">            anc=find(y)</span><br><span class="line">            res[number]=d[node]+d[y]-<span class="number">2</span>*d[anc]</span><br><span class="line">    v[node]=<span class="number">2</span></span><br><span class="line">dfs(<span class="number">1</span>)</span><br><span class="line">v=[<span class="number">0</span> <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n+<span class="number">1</span>)]</span><br><span class="line">tarjan(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">    <span class="built_in">print</span>(res[i])</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="Q4"><a href="#Q4" class="headerlink" title="Q4"></a>Q4</h3><blockquote>
-<p>模拟散列表(<a target="_blank" rel="noopener" href="https://www.csdn.net/">原题链接</a>)</p>
-</blockquote>
-<h3 id="A4"><a href="#A4" class="headerlink" title="A4"></a>A4</h3><blockquote>
-<p>哈希表的维护，一道例题<br>代码如下:</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">N=<span class="number">200003</span></span><br><span class="line">t=[<span class="built_in">float</span>(<span class="string">&#x27;inf&#x27;</span>) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(N)]</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">find</span>(<span class="params">x</span>):</span><br><span class="line">    index=((x%N)+N)%N</span><br><span class="line">    <span class="keyword">while</span> t[index]!=<span class="built_in">float</span>(<span class="string">&#x27;inf&#x27;</span>) <span class="keyword">and</span> t[index]!=x:</span><br><span class="line">        index+=<span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> index==N:</span><br><span class="line">            index=<span class="number">0</span></span><br><span class="line">    <span class="keyword">return</span> index</span><br><span class="line">n=<span class="built_in">int</span>(<span class="built_in">input</span>())</span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">    a,b=<span class="built_in">input</span>().split()</span><br><span class="line">    b=<span class="built_in">int</span>(b)</span><br><span class="line">    <span class="keyword">if</span> a==<span class="string">&#x27;I&#x27;</span>:</span><br><span class="line">        t[find(b)]=b</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">if</span> t[find(b)]==b:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;Yes&#x27;</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;No&#x27;</span>)</span><br><span class="line">        </span><br></pre></td></tr></table></figure>
-<h3 id="Q5"><a href="#Q5" class="headerlink" title="Q5"></a>Q5</h3><blockquote>
-<p>组合数问题(<a target="_blank" rel="noopener" href="https://www.csdn.net/">原题链接</a>)</p>
-</blockquote>
-<h3 id="A5"><a href="#A5" class="headerlink" title="A5"></a>A5</h3><blockquote>
-<p>看代码就行<br>代码如下:</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">t,k=<span class="built_in">map</span>(<span class="built_in">int</span>,<span class="built_in">input</span>().split())</span><br><span class="line"><span class="comment">#生成查询结果DP矩阵</span></span><br><span class="line">f=[[<span class="number">0</span> <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2010</span>)]<span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2010</span>)]</span><br><span class="line">st=[[<span class="number">0</span> <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2010</span>)]<span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2010</span>)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="number">2010</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,i+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> j==<span class="number">0</span>:</span><br><span class="line">            f[i][j]=<span class="number">1</span>%k</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            f[i][j]=(f[i-<span class="number">1</span>][j]+f[i-<span class="number">1</span>][j-<span class="number">1</span>])%k</span><br><span class="line">        <span class="keyword">if</span> f[i][j]==<span class="number">0</span>:</span><br><span class="line">            st[i][j]=<span class="number">1</span></span><br><span class="line"><span class="comment">#构造矩阵前缀和</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="number">2010</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="number">2010</span>):</span><br><span class="line">        <span class="keyword">if</span> i:</span><br><span class="line">            st[i][j]+=st[i-<span class="number">1</span>][j]</span><br><span class="line">        <span class="keyword">if</span> j:</span><br><span class="line">            st[i][j]+=st[i][j-<span class="number">1</span>]</span><br><span class="line">        <span class="keyword">if</span> i&gt;<span class="number">0</span> <span class="keyword">and</span> j&gt;<span class="number">0</span> :</span><br><span class="line">            st[i][j]-=st[i-<span class="number">1</span>][j-<span class="number">1</span>]</span><br><span class="line"><span class="keyword">while</span> t:</span><br><span class="line">    n,m=<span class="built_in">map</span>(<span class="built_in">int</span>,<span class="built_in">input</span>().split())</span><br><span class="line">    <span class="built_in">print</span>(st[n][m])</span><br><span class="line">    t-=<span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
-<p>呜呜呜</p>
-</blockquote>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/08/02/%E8%93%9D%E6%A1%A5%E6%9D%AF%E5%A4%87%E8%B5%9B%EF%BC%88%E5%8D%81%EF%BC%89-%E7%96%91%E9%9A%BE%E6%9D%82%E9%A2%98/" data-id="clktjri4s00027k03crmkg1um" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
     <article id="post-test" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2023/08/02/test/" class="article-date">
+    <a href="/%EF%BC%9Aabbrlink.html" class="article-date">
   <time class="dt-published" datetime="2023-08-02T07:00:15.000Z" itemprop="datePublished">2023-08-02</time>
 </a>
     
@@ -158,7 +87,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/08/02/test/">test</a>
+      <a class="p-name article-title" href="/%EF%BC%9Aabbrlink.html">test</a>
     </h1>
   
 
@@ -167,7 +96,10 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <h1 id="数据结构-算法-一-：递归与递推"><a href="#数据结构-算法-一-：递归与递推" class="headerlink" title="数据结构+算法(一)：递归与递推"></a>数据结构+算法(一)：递归与递推</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><blockquote>
-<p><strong>递归</strong>:函数存在本身调用自身的情况，这便是递归。递的意思就是将问题拆解成子问题进行求解，子问题再进一步求解，直到无法进一步细致。归的意思就是最小子问题的求解。递归解题通用解决思路：<br>1.一个问题可以分解成具有相同解决思路的子问题（本质就是能调用同一个函数dfs）<br>2.经过层层分解的子问题最后一定是有一个不能再分解的固定值的（即终止条件）。当具备以上条件时，我们即可在一定T复杂度下使用递归实现。<br><strong>递推</strong>:通过一定的公式或者堆砌将我们的结果从底层开始进行递推。  </p>
+<p align="left">**递归**:函数存在本身调用自身的情况，这便是递归。递的意思就是将问题拆解成子问题进行求解，子问题再进一步求解，直到无法进一步细致。归的意思就是最小子问题的求解。递归解题通用解决思路：  </p>
+<p align="left">1.一个问题可以分解成具有相同解决思路的子问题（本质就是能调用同一个函数dfs）   </p>
+<p align="left">2.经过层层分解的子问题最后一定是有一个不能再分解的固定值的（即终止条件）。当具备以上条件时，我们即可在一定T复杂度下使用递归实现。 </p>
+<p align="left">**递推**:通过一定的公式或者堆砌将我们的结果从底层开始进行递推。</p>  
 </blockquote>
 <h2 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h2><h3 id="Question-1"><a href="#Question-1" class="headerlink" title="Question_1"></a>Question_1</h3><blockquote>
 <p>递归实现指数型枚举([原题链接](<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/94/">92. 递归实现指数型枚举 - AcWing题库</a>))     </p>
@@ -193,7 +125,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/08/02/test/" data-id="clktjri4r00017k03c8zu012f" data-title="test" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/%EF%BC%9Aabbrlink.html" data-id="clktkm4ao0001w403glzbd0in" data-title="test" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -209,7 +141,7 @@
   
     <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2023/08/01/hello-world/" class="article-date">
+    <a href="/%EF%BC%9Aabbrlink.html" class="article-date">
   <time class="dt-published" datetime="2023-08-01T13:12:53.737Z" itemprop="datePublished">2023-08-01</time>
 </a>
     
@@ -221,7 +153,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/08/01/hello-world/">Hello World</a>
+      <a class="p-name article-title" href="/%EF%BC%9Aabbrlink.html">Hello World</a>
     </h1>
   
 
@@ -246,7 +178,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/08/01/hello-world/" data-id="clktjri4k00007k03a2b7eywk" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/%EF%BC%9Aabbrlink.html" data-id="clktkm4aj0000w4038m53ay2h" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -303,15 +235,11 @@
       <ul>
         
           <li>
-            <a href="/2023/08/02/%E8%93%9D%E6%A1%A5%E6%9D%AF%E5%A4%87%E8%B5%9B%EF%BC%88%E5%8D%81%EF%BC%89-%E7%96%91%E9%9A%BE%E6%9D%82%E9%A2%98/">(no title)</a>
+            <a href="/%EF%BC%9Aabbrlink.html">test</a>
           </li>
         
           <li>
-            <a href="/2023/08/02/test/">test</a>
-          </li>
-        
-          <li>
-            <a href="/2023/08/01/hello-world/">Hello World</a>
+            <a href="/%EF%BC%9Aabbrlink.html">Hello World</a>
           </li>
         
       </ul>
