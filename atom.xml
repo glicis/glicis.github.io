@@ -10,7 +10,7 @@
   <id>http://example.com/</id>
   
   <author>
-    <name>John Doe</name>
+    <name>CMwang</name>
     
   </author>
   
@@ -18,8 +18,8 @@
   
   <entry>
     <title>test</title>
-    <link href="http://example.com/63534.html"/>
-    <id>http://example.com/63534.html</id>
+    <link href="http://example.com/undefined/abbrlink.html"/>
+    <id>http://example.com/undefined/abbrlink.html</id>
     <published>2023-08-02T07:00:15.000Z</published>
     <updated>2023-08-02T10:27:21.385Z</updated>
     
@@ -40,8 +40,8 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="http://example.com/16107.html"/>
-    <id>http://example.com/16107.html</id>
+    <link href="http://example.com/undefined/abbrlink.html"/>
+    <id>http://example.com/undefined/abbrlink.html</id>
     <published>2023-08-01T13:12:53.737Z</published>
     <updated>2023-08-02T10:27:25.564Z</updated>
     
