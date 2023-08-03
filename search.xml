@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>test</title>
+      <link href="/archives/63534.html"/>
+      <url>/archives/63534.html</url>
+      
+        <content type="html"><![CDATA[<h1>数据结构+算法(一)：递归与递推</h1><h2 id="概念">概念</h2><blockquote><p align="left">**递归**:函数存在本身调用自身的情况，这便是递归。递的意思就是将问题拆解成子问题进行求解，子问题再进一步求解，直到无法进一步细致。归的意思就是最小子问题的求解。递归解题通用解决思路：  </p><p align="left">1.一个问题可以分解成具有相同解决思路的子问题（本质就是能调用同一个函数dfs）   </p><p align="left">2.经过层层分解的子问题最后一定是有一个不能再分解的固定值的（即终止条件）。当具备以上条件时，我们即可在一定T复杂度下使用递归实现。 </p><p align="left">**递推**:通过一定的公式或者堆砌将我们的结果从底层开始进行递推。</p>  </blockquote><h2 id="例题">例题</h2><h3 id="Question-1">Question_1</h3><blockquote><p>递归实现指数型枚举([原题链接](<a href="https://www.acwing.com/problem/content/94/">92. 递归实现指数型枚举 - AcWing题库</a>))</p></blockquote><h3 id="Answer-1">Answer_1</h3><blockquote><p>对于该问题，我们每个数字都是选与不选两种情况，不妨将0视为低电平，1为高电平触发使用。<br>故我们可以利用二进制来表示每次的结果。<br>我们可以通过位运算来获取每次的值<br>代码如下:</p></blockquote><pre><code class="language-python">n=int(input())for i in range((1&lt;&lt;n)):    lst=[]    for k in range(n):        if i&gt;&gt;k &amp; 1:            #说明该位为1            lst.append(str(k+1))    if len(lst)==0:        print(' ')    else:        print(' '.join(lst))</code></pre><div align=center>    <img src='../images/white_back.jpg' style="zoom:10%;" /></div><p>​</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 测试 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Hello World</title>
+      <link href="/archives/16107.html"/>
+      <url>/archives/16107.html</url>
+      
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start">Quick Start</h2><h3 id="Create-a-new-post">Create a new post</h3><pre><code class="language-bash">$ hexo new &quot;My New Post&quot;</code></pre><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server">Run server</h3><pre><code class="language-bash">$ hexo server</code></pre><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files">Generate static files</h3><pre><code class="language-bash">$ hexo generate</code></pre><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites">Deploy to remote sites</h3><pre><code class="language-bash">$ hexo deploy</code></pre><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+  
+  
+</search>
