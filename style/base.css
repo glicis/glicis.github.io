@@ -102,6 +102,7 @@
   margin: 0;
   height: 100vh;
   padding-top: 45px;
+  background: url(/images/background.jpg);
 }
 :root body a {
   color: inherit;
