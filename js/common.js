@@ -49,13 +49,5 @@ window.$claudia = {
         var blurImg = parent.previousElementSibling //TODO: Not finish yes, must be a pure function
 
         isCovered ? blurImg.classList.add('is-hidden') : blurImg.classList.remove('is-hidden')
-    },
-    getSystemTheme(callback) {
-        var media = window.matchMedia('(prefers-color-scheme: dark)')
-        media.addEventListener('change', function (e){
-            callback && callback(e.matches ? "dark" : "light")
-        })
-
-        callback && callback(media.matches ? 'dark' : 'light')
     }
 }

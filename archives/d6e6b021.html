@@ -1,0 +1,346 @@
+<!DOCTYPE html><html class="appearance-auto" lang="zh-CN"><head><meta charset="UTF-8"><title>智能优化算法(GA、PSO、SA)模块化+Python实现</title><meta name="description" content="你迟到了哦..."><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><link rel="stylesheet" href="/style/common/jquery.fancybox.min.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="
+总概
+
+此篇文章基于当初大二时数学建模实验课程的智能算法研究所作。废话不多说，直接follow。
+
+三大智能优化算法本质探究
+
+不要被智能蒙蔽了双眼，本质其实就是利用一定规则进行局部搜索。
+我们之前的传统算法基本是遍历穷举进行可行范围内寻求目标函数的最优解。但在这里有如下几个基本思维步骤（不涉及具体实现）。
+1.全局可行解随机选取
+2.可行解带入目标函数求值
+3.值筛选，选取当前最优值
+4.在当前最优值对应解进行有目标随机浮动，实现有目标随机遍历
+5.2，3，4步骤进行重复
+我觉得这些步骤看起来很简单，了解了这些基本步骤后对智能算法的原理以及实现也就更加清楚了。各种算法的差异主要体现在可行解的收敛算法。
+
+遗传算法(ga)
+
+遗传算法有个特殊的地方，就是自变量编码问题。我们习惯性将对应维度的值转化成二进制.."><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="ligics' blog" type="application/atom+xml">
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">五点邮局's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">智能优化算法(GA、PSO、SA)模块化+Python实现</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">点击返回顶部</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3><h3 class="is-inline-block"><a href="/cv/my_cv.pdf">cv</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3><h3 class="is-inline-block"><a href="/cv/my_cv.pdf">cv</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E6%A6%82"><span class="toc-text">总概</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E5%A4%A7%E6%99%BA%E8%83%BD%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95%E6%9C%AC%E8%B4%A8%E6%8E%A2%E7%A9%B6"><span class="toc-text">三大智能优化算法本质探究</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95-ga"><span class="toc-text">遗传算法(ga)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B2%92%E5%AD%90%E7%BE%A4%E7%AE%97%E6%B3%95-PSO"><span class="toc-text">粒子群算法(PSO)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E6%8B%9F%E9%80%80%E7%81%AB%E7%AE%97%E6%B3%95-SA"><span class="toc-text">模拟退火算法(SA)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E6%96%87%E4%B8%8D%E5%85%B7%E4%BD%93%E4%BB%8B%E7%BB%8D%E5%90%84%E4%B8%AA%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%EF%BC%8C%E5%8F%AA%E6%98%AF%E5%AF%B9%E4%BA%8E%E6%94%B6%E6%95%9B%E7%AE%97%E6%B3%95%E7%9A%84%E6%8E%A2%E7%A9%B6"><span class="toc-text">本文不具体介绍各个算法原理，只是对于收敛算法的探究</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-text">Python代码实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ga%E5%AE%9E%E7%8E%B0"><span class="toc-text">ga实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PSO%E5%AE%9E%E7%8E%B0"><span class="toc-text">PSO实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SA%E5%AE%9E%E7%8E%B0"><span class="toc-text">SA实现</span></a></li></ol></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/%E7%AE%97%E6%B3%95"><i class="tag post-item-tag">算法</i></a><a href="/tags/Python"><i class="tag post-item-tag">Python</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">智能优化算法(GA、PSO、SA)模块化+Python实现</h1><time class="has-text-grey" datetime="2023-08-04T07:57:56.000Z">2023-08-04</time><article class="mt-2 post-content"><p><img src="../images/article_2_cover.jpeg" alt="cover"></p>
+<h2 id="总概">总概</h2>
+<blockquote>
+<p>此篇文章基于当初大二时数学建模实验课程的智能算法研究所作。废话不多说，直接follow。</p>
+</blockquote>
+<h2 id="三大智能优化算法本质探究">三大智能优化算法本质探究</h2>
+<blockquote>
+<p>不要被智能蒙蔽了双眼，本质其实就是利用一定规则进行局部搜索。<br>
+我们之前的传统算法基本是遍历穷举进行可行范围内寻求目标函数的最优解。但在这里有如下几个基本思维步骤（不涉及具体实现）。<br>
+1.全局可行解随机选取<br>
+2.可行解带入目标函数求值<br>
+3.值筛选，选取当前最优值<br>
+4.在当前最优值对应解进行有目标随机浮动，实现有目标随机遍历<br>
+5.2，3，4步骤进行重复<br>
+我觉得这些步骤看起来很简单，了解了这些基本步骤后对智能算法的原理以及实现也就更加清楚了。各种算法的差异主要体现在可行解的收敛算法。</p>
+</blockquote>
+<h2 id="遗传算法-ga">遗传算法(ga)</h2>
+<blockquote>
+<p>遗传算法有个特殊的地方，就是自变量编码问题。我们习惯性将对应维度的值转化成二进制编码然后串联组成DNA序列，然后具体计算再涉及编码解码的问题（其实本人觉得有点多此一举了）。<br>
+这里需要将可行解理解为DNA表现型。值筛选就按<b>适应度</b>（与目标函数有关）计算。值得关注的就是可行解的收敛算法了。<br>
+ga运用了我们大自然优胜劣汰（就是寻当前最优解），然后逐步扩大当前最优解的涉及影响范围（就是使尽量多的后代与其保持相同的DNA序列）。但这有个通病，就是容易导致可行解逐渐陷入局部最优解，而不是找到我们最需要的解（可以理解<b>局部最优就是陷入极小值点，而全局最优是最小值点</b>&gt;，高中数学就告诉我们这两者不一样。当然这是为了方便理解，对于离散非连续的函数可不能这么理解）。<br>
+为了解决这个问题，我们就利用变异，染色体交叉的操作来实现可行解跳出舒适圈（实现寻找其他最优解）。提高了遗传算法的感受野，更为容易寻找到目标函数的最优解。</p>
+</blockquote>
+<h2 id="粒子群算法-PSO">粒子群算法(PSO)</h2>
+<blockquote>
+<p>粒子群算法个人觉得就可行解的收敛算法与ga不一致罢了。但其更符合我们的社会行为。<br>
+粒子群随机分布，会互相联系，告知对方自己寻找到的最优解(群最优解)，以及心知肚明自己碰到的最优解，这些会影响自己的加速度(梯度)。然后每次迭代会改变自己的速度以及位置(高中物理就告诉我们速度是多维的，速度会改变多个维度变量的数值)，最终迭代结束，得到最优解。<br>
+该算法可以通过绘制粒子pos图(可通过PAC将变量加权降维到三维进行绘制)得出收敛的结论(前提是该目标函数可收敛，现象是粒子群逐渐汇聚，但偶尔有几个跑去其他地方寻找最优解了)</p>
+</blockquote>
+<h2 id="模拟退火算法-SA">模拟退火算法(SA)</h2>
+<blockquote>
+<p>该算法用处最多，尤其在电力系统中得到广泛应用。基于物理现象进行的算法设计。<br>
+首先温度很高，增加自变量的感受野(刚开始算法不会收敛)，随后逐步迭代温度降低，对非最优解的容忍度降低，逐步进入收敛过程。</p>
+</blockquote>
+<h2 id="本文不具体介绍各个算法原理，只是对于收敛算法的探究">本文不具体介绍各个算法原理，只是对于收敛算法的探究</h2>
+<h2 id="Python代码实现">Python代码实现</h2>
+<blockquote>
+<p>首先给出目标函数如下:<br>
+$$<br>
+F(x)=\sum_ {i=1}^n (x_i^2-10cos(2\pi x_i)+10)<br>
+$$<br>
+其中n=30(也就是30个维度)。各个变量的边界条件为[-5.12,5.12]</p>
+</blockquote>
+<h3 id="ga实现">ga实现</h3>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+def decode(x, a, b):
+    &quot;&quot;&quot;解码，即基因型到表现型&quot;&quot;&quot;
+    xt = 0
+    for i in range(len(x)):
+        xt = xt + x[i] * np.power(2, i)
+    return a + xt * (b - a) / (np.power(2, len(x)) - 1)
+
+def decode_X(X: np.array,lb,ub,dna_num):
+    &quot;&quot;&quot;对整个种群的基因解码，上面的decode是对某个染色体的某个变量进行解码&quot;&quot;&quot;
+    X2 = np.zeros((X.shape[0],dna_num))
+    for i in range(X.shape[0]):
+        x=[]
+        for j in range(dna_num):
+            m=decode(X[i,10*j:10*(j+1)],lb,ub)#进行解码
+        x.append(m)
+        X2[i, :] = np.array(x)
+    return X2
+
+def select(X, fitness):
+    &quot;&quot;&quot;根据轮盘赌法选择优秀个体&quot;&quot;&quot;
+    fitness = 1 / fitness  # fitness越小表示越优秀，被选中的概率越大，做 1/fitness 处理
+    fitness = fitness / fitness.sum()  # 归一化    
+    idx = np.array(list(range(X.shape[0])))
+    X2_idx = np.random.choice(idx, size=X.shape[0], p=fitness)  # 根据概率选择
+    X2 = X[X2_idx, :]
+    return X2
+
+def crossover(X, c):
+    &quot;&quot;&quot;按顺序选择2个个体以概率c进行交叉操作&quot;&quot;&quot;
+    for i in range(0, X.shape[0], 2):
+        xa = X[i, :]
+        xb = X[i + 1, :]
+        for j in range(X.shape[1]):
+            # 产生0-1区间的均匀分布随机数，判断是否需要进行交叉替换
+            if np.random.rand() &lt;= c:
+                xa[j], xb[j] = xb[j], xa[j]
+        X[i, :] = xa
+        X[i + 1, :] = xb
+    return X    
+
+def mutation(X, m):
+    &quot;&quot;&quot;变异操作&quot;&quot;&quot;
+    for i in range(X.shape[0]):
+        for j in range(X.shape[1]):
+            if np.random.rand() &lt;= m:
+                X[i, j] = (X[i, j] + 1) % 2
+    return X
+def fitness_func1(X):
+    return (X**2-10*np.cos(2*np.pi*X)+10).sum(axis=1)   
+
+def ga(fun_c,c,m,lb,ub,num,dna_num,iter_num):
+    &quot;&quot;&quot;遗传算法主函数&quot;&quot;&quot;
+    #fun_c:传入的优化函数（传入参数应该为矩阵）
+    #c:交叉概率
+    #m：变异概率
+    #num:种群数量
+    #dna_num:dna的数量（表现型）,也就是变量个数
+    #lb,ub:变量的上下边界（为矩阵的形式）
+    best_fitness = []  # 记录每次迭代的效果
+    best_xlist = []
+    X0 = np.random.randint(0, 2, (num, 10*dna_num))  # 随机初始化种群，为50*500的0-1矩阵
+    for i in range(iter_num):
+        X1 = decode_X(X0,lb,ub,dna_num)  # 染色体解码
+        fitness = fun_c(X1)  # 计算个体适应度
+        X2 = select(X0, fitness)  # 选择操作
+        X3 = crossover(X2, c)  # 交叉操作
+        X4 = mutation(X3, m)  # 变异操作
+        # 计算一轮迭代的效果
+        X5 = decode_X(X4,lb,ub,dna_num)
+        fitness = fun_c(X5)
+        best_fitness.append(fitness.min())
+        x= X5[fitness.argmin()]
+        best_xlist.append(x)
+        X0 = X4
+    # 多次迭代后的最终效果
+    print(&quot;最优值是：%.5f&quot; % best_fitness[-1])
+    print(&quot;最优解是：&quot;,best_xlist[-1])
+    plt.plot(best_fitness, color='r')
+    plt.show()
+ga(fitness_func1,0.1,0.1,-5.12,5.12,50,30,1000)
+</code></pre>
+<p>得到如下结果:</p>
+<img src="..\images\article_2_ga.png" style="zoom:100%;" />
+<h3 id="PSO实现">PSO实现</h3>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+def fit_fun(X):  # 适应函数(根据自身情况进行修改)
+    return (X**2-10*np.cos(2*np.pi*X)+10).sum(axis=1)
+
+
+class Particle:
+    # 初始化
+    def __init__(self, x_max, max_vel, dim):
+        self.__pos = np.random.uniform(-x_max, x_max, (1, dim))  # 粒子的位置
+        self.__vel = np.random.uniform(-max_vel, max_vel, (1, dim))  # 粒子的速度
+        self.__bestPos = np.random.random((1, dim))  # 粒子最好的位置
+        self.__fitnessValue = fit_fun(self.__pos)  # 适应度函数值
+
+    def set_pos(self, value):
+        self.__pos = value
+
+    def get_pos(self):
+        return self.__pos
+
+    def set_best_pos(self, value):
+        self.__bestPos = value
+
+    def get_best_pos(self):
+        return self.__bestPos
+
+    def set_vel(self, value):
+        self.__vel = value
+
+    def get_vel(self):
+        return self.__vel
+
+    def set_fitness_value(self, value):
+        self.__fitnessValue = value
+
+    def get_fitness_value(self):
+        return self.__fitnessValue
+
+
+class PSO:
+    def __init__(self, dim, size, iter_num, x_max, max_vel, tol,  C1, C2, W,best_fitness_value=float('Inf')):
+        self.C1 = C1
+        self.C2 = C2
+        self.W = W      
+        self.dim = dim  # 粒子的维度
+        self.size = size  # 粒子个数
+        self.iter_num = iter_num  # 迭代次数
+        self.x_max = x_max
+        self.max_vel = max_vel  # 粒子最大速度
+        self.tol = tol  # 截至条件
+        self.best_fitness_value = best_fitness_value
+        self.best_position = np.zeros((1, dim))  # 种群最优位置
+        self.fitness_val_list = []  # 每次迭代最优适应值
+
+        # 对种群进行初始化
+        self.Particle_list = [Particle(self.x_max, self.max_vel, self.dim) for i in range(self.size)]
+
+    def set_bestFitnessValue(self, value):
+        self.best_fitness_value = value
+
+    def get_bestFitnessValue(self):
+        return self.best_fitness_value
+
+    def set_bestPosition(self, value):
+        self.best_position = value
+
+    def get_bestPosition(self):
+        return self.best_position
+
+    # 更新速度
+    def update_vel(self, part):
+        vel_value = self.W * part.get_vel() + self.C1 * np.random.uniform(-1,1) * (part.get_best_pos() - part.get_pos()) \
+                    + self.C2 * np.random.uniform(-1,1) * (self.get_bestPosition() - part.get_pos())
+        vel_value[vel_value &gt; self.max_vel] = self.max_vel
+        vel_value[vel_value &lt; -self.max_vel] = -self.max_vel
+        part.set_vel(vel_value)
+    # 更新位置
+    def update_pos(self, part):
+        pos_value = part.get_pos() + part.get_vel()
+        pos_value[pos_value&gt;self.x_max]=self.x_max
+        pos_value[pos_value&lt;-self.x_max]=-self.x_max
+        part.set_pos(pos_value)
+        value = fit_fun(part.get_pos())
+        if value &lt; part.get_fitness_value():
+            part.set_fitness_value(value)
+            part.set_best_pos(pos_value)
+        if value &lt; self.get_bestFitnessValue():
+            self.set_bestFitnessValue(value)
+            self.set_bestPosition(pos_value)
+
+    def update_ndim(self):
+        for i in range(self.iter_num):
+            for part in self.Particle_list:
+                self.update_vel(part)  # 更新速度
+                self.update_pos(part)  # 更新位置
+            self.fitness_val_list.append(self.get_bestFitnessValue())  # 每次迭代完把当前的最优适应度存到列表
+            if self.get_bestFitnessValue() &lt; self.tol:
+                break
+        return self.fitness_val_list, self.get_bestPosition()
+
+if __name__ == '__main__':
+    pso = PSO(30, 20, 100000, 5.12, 1, 1e-12, 2, 5,8)
+    fit_var_list, best_pos = pso.update_ndim()
+    print(&quot;最优位置:&quot; + str(best_pos))
+    print(&quot;最优解:&quot; + str(min(fit_var_list)))
+    plt.plot(range(len(fit_var_list)), fit_var_list, alpha=0.5)
+    plt.show()
+</code></pre>
+<p>得到如下结果:</p>
+<p><img src="..%5Cimages%5Carticle_2_pso.png" alt=""></p>
+<h3 id="SA实现">SA实现</h3>
+<pre><code class="language-python">import math
+import numpy as np
+from random import random
+from numpy.random import rand
+import matplotlib.pyplot as plt
+def func(X):                  #函数优化问题
+    X=np.array(X)
+    return (X**2-10*np.cos(2*np.pi*X)+10).sum()
+class SA:
+    def __init__(self, func,lb,ub,iter,dim, T0, Tf, alpha):
+        self.func = func         #定义优化函数
+        self.iter = iter         #内循环迭代次数
+        self.alpha = alpha       #降温系数
+        self.T0 = T0             #初始温度T0
+        self.Tf = Tf             #温度终值Tf
+        self.T = T0              #当前温度(这里只是初始化)
+        self.ub=ub               #自变量最大值
+        self.lb=lb               #自变量最小值
+        self.dim=dim             #自变量维数（也就是数量)
+        self.X =np.array([lb+(ub-lb)*rand()  for i in range(dim)
+                ])#限定取值区间
+        self.most_best =[]
+        self.history = &#123;'f': [], 'T': []&#125;
+
+    def generate_new(self, X):   #扰动产生新解的过程
+            X=np.array(X)
+            X_new=X+self.T*np.random.uniform(-1,1,X.shape)/100
+            X_new[X_new&lt;self.lb]=self.lb
+            X_new[X_new&gt;self.ub]=self.ub
+            return X_new 
+
+    def Metrospolis(self, f, f_new):   #Metropolis准则
+        if f_new&lt;= f:
+            return 1
+        else:
+            p = math.exp((f - f_new) / self.T)
+            if random() &lt; p:
+                return 1
+            else:
+                return 0
+
+    def best(self):    #获取最优目标函数值
+        f = self.func(self.X)
+        return f   #f_best,idx分别为在该温度下，迭代L次之后目标函数的最优解和最优解的下标
+
+    def run(self):
+        count = 0
+        #外循环迭代，当前温度小于终止温度的阈值
+        while self.T &gt; self.Tf:       
+            for i in range(self.iter): 
+                f = self.func(self.X)                    #f为迭代一次后的值
+                X_new = self.generate_new(self.X) #产生新解
+                f_new = self.func(X_new)                        #产生新值
+                if self.Metrospolis(f, f_new):                         #判断是否接受新值
+                    self.X=X_new
+            # 迭代L次记录在该温度下最优解
+            ft = self.best()
+            self.history['f'].append(ft)
+            self.history['T'].append(self.T)
+            #温度按照一定的比例下降（冷却）
+            self.T = self.T * self.alpha        
+            count += 1
+            
+            # 得到最优解
+        f_best = self.best()
+        print(f&quot;F=&#123;f_best&#125;, x=&#123;self.X&#125;&quot;)
+sa = SA(func,-5.12,5.12,1000,30,100,0.01,0.98)
+sa.run()
+plt.plot(sa.history['T'], sa.history['f'])
+plt.title('SA')
+plt.xlabel('T')
+plt.ylabel('f')
+plt.gca().invert_xaxis()
+plt.show()
+</code></pre>
+<p>SA算法结果如下:</p>
+<p><img src="..%5Cimages%5Carticle_2_sa.png" alt=""></p>
+<p>##算法注意事项</p>
+<blockquote>
+<p>1.首先我们需要注意对于变量范围的划分，我们首先需要均匀选点绘制出离散图然后选择一个有效区间(加速收敛)。<br>
+2.超参数一定要认真调试，智能算法主要就是参数问题。</p>
+</blockquote>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><em></em><a class="button is-default" href="/archives/63534.html" title="数据结构+算法(一)：递归与递推"><span class="has-text-weight-semibold">下一页: 数据结构+算法(一)：递归与递推</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="glicis/glicis.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/glicis"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><a title="zhihu" target="_blank" rel="noopener nofollow" href="//zhihu.com/五点邮局"><i class="iconfont icon-zhihu"></i></a><!-- 领英--><!-- 脸书--><!--csdn--><a title="csdn" target="_blank" rel="noopener nofollow" href="//blog.csdn.net/ligics"><i class="iconfont icon-csdn-copy"></i></a><!--bilibili--><a title="csdn" target="_blank" rel="noopener nofollow" href="//space.bilibili.com/690619909"><i class="iconfont icon-bilibili-line"></i></a></section><p><span>Copyright ©</span><span> 五点邮局 2023</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/glicis">Theme by 五点邮局&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/glicis/glicis.github.io" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>

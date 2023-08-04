@@ -1,38 +1,47 @@
-<!DOCTYPE html><html class="appearance-auto" lang="zh-CN"><head><meta charset="UTF-8"><title>五点邮局's blog</title><meta name="description" content="May the Force be with you"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!DOCTYPE html><html class="appearance-auto" lang="zh-CN"><head><meta charset="UTF-8"><title>五点邮局's blog</title><meta name="description" content="你迟到了哦..."><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
 <!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/widget-post-list.css"><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="ligics' blog" type="application/atom+xml">
-</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">五点邮局's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><span>归档 · 2023</span></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3><h3 class="is-inline-block"><a href="/cv">cv</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3><h3 class="is-inline-block"><a href="/cv">cv</a></h3></header><main><article class="post-container is-flex is-justify-content-center section container is-max-widescreen pt-4 px-2"><div class="columns is-variable is-1-tablet is-3-desktop-only is-2-widescreen is-full-width"><section class="column"><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E6%B5%8B%E8%AF%95"><i class="tag post-item-tag">测试</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/archives/63534.html">test</a></h2><time class="has-text-grey" datetime="2023-08-02T07:00:15.000Z">2023-08-02</time><p class="is-flex-grow-2 mt-2">数据结构+算法(一)：递归与递推
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">五点邮局's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><span>归档 · 2023</span></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3><h3 class="is-inline-block"><a href="/cv/my_cv.pdf">cv</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3><h3 class="is-inline-block"><a href="/cv/my_cv.pdf">cv</a></h3></header><main><article class="post-container is-flex is-justify-content-center section container is-max-widescreen pt-4 px-2"><div class="columns is-variable is-1-tablet is-3-desktop-only is-2-widescreen is-full-width"><section class="column"><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="../images/article_2_cover.jpeg" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/archives/d6e6b021.html"><img class="post-cover-img js-img-fadeIn" src="../images/article_2_cover.jpeg" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E7%AE%97%E6%B3%95"><i class="tag post-item-tag">算法</i></a><a href="/tags/Python"><i class="tag post-item-tag">Python</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/archives/d6e6b021.html">智能优化算法(GA、PSO、SA)模块化+Python实现</a></h2><time class="has-text-grey" datetime="2023-08-04T07:57:56.000Z">2023-08-04</time><p class="is-flex-grow-2 mt-2">
+总概
+
+此篇文章基于当初大二时数学建模实验课程的智能算法研究所作。废话不多说，直接follow。
+
+三大智能优化算法本质探究
+
+不要被智能蒙蔽了双眼，本质其实就是利用一定规则进行局部搜索。
+我们之前的传统算法基本是遍历穷举进行可行范围内寻求目标函数的最优解。但在这里有如下几个基本思维步骤（不涉及具体实现）。
+1.全局可行解随机选取
+2.可行解带入目标函数求值
+3.值筛选，选取当前最优值
+4.在当前最优值对应解进行有目标随机浮动，实现有目标随机遍历
+5.2，3，4步骤进行重复
+我觉得这些步骤看起来很简单，了解了这些基本步骤后对智能算法的原理以及实现也就更加清楚了。各种算法的差异主要体现在可行解的收敛算法。
+
+遗传算法(ga)
+
+遗传算法有个特殊的地方，就是自变量编码问题。我们习惯性将对应维度的值转化成二进制..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/archives/d6e6b021.html">更多</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="../images/article_1_cover.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/archives/63534.html"><img class="post-cover-img js-img-fadeIn" src="../images/article_1_cover.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><i class="tag post-item-tag">数据结构</i></a><a href="/tags/%E7%AE%97%E6%B3%95"><i class="tag post-item-tag">算法</i></a><a href="/tags/Python"><i class="tag post-item-tag">Python</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/archives/63534.html">数据结构+算法(一)：递归与递推</a></h2><time class="has-text-grey" datetime="2023-08-02T07:00:15.000Z">2023-08-02</time><p class="is-flex-grow-2 mt-2">
 概念
 
-**递归**:函数存在本身调用自身的情况，这便是递归。递的意思就是将问题拆解成子问题进行求解，子问题再进一步求解，直到无法进一步细致。归的意思就是最小子问题的求解。递归解题通用解决思路：  
+递归:函数存在本身调用自身的情况，这便是递归。递的意思就是将问题拆解成子问题进行求解，子问题再进一步求解，直到无法进一步细致。归的意思就是最小子问题的求解。递归解题通用解决思路：  
 1.一个问题可以分解成具有相同解决思路的子问题（本质就是能调用同一个函数dfs）   
 2.经过层层分解的子问题最后一定是有一个不能再分解的固定值的（即终止条件）。当具备以上条件时，我们即可在一定T复杂度下使用递归实现。 
-**递推**:通过一定的公式或者堆砌将我们的结果从底层开始进行递推。  
+递推:通过一定的公式或者堆砌将我们的结果从底层开始进行递推。  
 
 例题
 Question_1
 
-递归实现指数型枚举([原题链接](92. 递归实现指数型枚举 - AcWing题库))
+递归实现指数型枚举(原题链接)
 
 Answer_1
 
-对于该问题，我们每个数字都是选与不选两种情..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/archives/63534.html">更多</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><h2 class="mt-4 mb-0 is-family-serif"><a href="/archives/16107.html">Hello World</a></h2><time class="has-text-grey" datetime="2023-08-01T13:12:53.737Z">2023-08-01</time><p class="is-flex-grow-2 mt-2">Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick Start
-Create a new post
-$ hexo new &amp;quot;My New Post&amp;quot;
-
-More info: Writing
-Run server
-$ hexo server
-
-More info: Server
-Generate static files
-$ hexo gener..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/archives/16107.html">更多</a></section></article></section><aside class="column is-hidden-mobile is-4-tablet is-3-widescreen"><div style="position: sticky; top: 50px;"><main class="aside-card-container archives-widget is-in-archive-page"><h3>归档</h3><section><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">2</span></li></ul></section></main></div></aside></div></article><script>$claudia.fadeInImage(null, $claudia.blurBackdropImg)
+对于该问题，我们每个数字都是选与不选两种情况，不妨将0视为低电平，1为高电平触发使用。
+故我们可以利用二进制来表示每次的结果。
+我们可以通过位运算..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/archives/63534.html">更多</a></section></article></section><aside class="column is-hidden-mobile is-4-tablet is-3-widescreen"><div style="position: sticky; top: 50px;"><main class="aside-card-container archives-widget is-in-archive-page"><h3>归档</h3><section><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">2</span></li></ul></section></main></div></aside></div></article><script>$claudia.fadeInImage(null, $claudia.blurBackdropImg)
 
 window.addEventListener('resize', $claudia.throttle(function () {
     var images = document.querySelectorAll('.js-img-fadeIn')
 
     images.forEach($claudia.blurBackdropImg)
-}, 150))</script></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><a title="twitter" target="_blank" rel="noopener nofollow" href="//twitter.com//"><i class="iconfont icon-twitter"></i></a><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/glicis"><i class="iconfont icon-github"></i></a><!-- Ins--><a title="instagram" target="_blank" rel="noopener nofollow" href="//www.instagram.com//"><i class="iconfont icon-ins"></i></a><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--><a title="facebook" target="_blank" rel="noopener nofollow" href="//www.facebook.com//"><i class="iconfont icon-tian7_facebook"></i></a></section><p><span>Copyright ©</span><span> 五点邮局 2023</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script>$claudia.fadeInImage(null, $claudia.blurBackdropImg)
+}, 150))</script></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/glicis"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><a title="zhihu" target="_blank" rel="noopener nofollow" href="//zhihu.com/五点邮局"><i class="iconfont icon-zhihu"></i></a><!-- 领英--><!-- 脸书--><!--csdn--><a title="csdn" target="_blank" rel="noopener nofollow" href="//blog.csdn.net/ligics"><i class="iconfont icon-csdn-copy"></i></a><!--bilibili--><a title="csdn" target="_blank" rel="noopener nofollow" href="//space.bilibili.com/690619909"><i class="iconfont icon-bilibili-line"></i></a></section><p><span>Copyright ©</span><span> 五点邮局 2023</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/glicis">Theme by 五点邮局&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/glicis/glicis.github.io" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script>$claudia.fadeInImage(null, $claudia.blurBackdropImg)
 
 window.addEventListener('resize', $claudia.throttle(function () {
     var images = document.querySelectorAll('.js-img-fadeIn')
